@@ -2,7 +2,8 @@
 
 ### Setup
 ```bash
-clone winyourhabit repo
+# clone repository
+git clone git@github.com:cioionut/winyourhabit-api.git
 cd winyourhabit-api
 
 # Create a virtualenv to isolate our package dependencies locally
