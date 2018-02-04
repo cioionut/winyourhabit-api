@@ -15,8 +15,8 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `detail`, `create` and `delete`
     """
-
-    permission_classes = (permissions.IsAuthenticated, )
+    # remove permissions just for development purposes
+    # permission_classes = (permissions.IsAuthenticated, )
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
