@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 # from django.contrib.auth.models import User
-from winyourhabit_api.models import User
+from winyourhabit_api.models import User, ProofText
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -26,3 +26,20 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password', 'credit')
+
+
+class ProofTextSerializer(serializers.ModelSerializer):
+
+    type = serializers.ChoiceField(
+            required=True,
+            choices=[ProofText.TEXT],
+            # validators=[UniqueValidator(queryset=User.objects.all())]
+            )
+    content = serializers.CharField(
+        required=True,
+        max_length=5000,
+    )
+
+    class Meta:
+        model = ProofText
+        fields = ('id', 'type', 'content')

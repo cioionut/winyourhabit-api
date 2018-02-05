@@ -6,18 +6,30 @@ from rest_framework.authtoken.models import Token
 from rest_framework import permissions
 
 
-from winyourhabit_api.models import User
-from winyourhabit_api.serializers import UserSerializer
+from winyourhabit_api.models import User, ProofText
+from winyourhabit_api.serializers import UserSerializer, ProofTextSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
     """
-    This viewset automatically provides `list`, `detail`, `create` and `delete`
+        This viewset automatically provides `list`, `create`, `retrieve`,
+        `update` and `destroy` actions.
     """
     # remove permissions just for development purposes
     # permission_classes = (permissions.IsAuthenticated, )
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class ProofTextViewSet(viewsets.ModelViewSet):
+    """
+        This viewset automatically provides `list`, `create`, `retrieve`,
+        `update` and `destroy` actions.
+    """
+    # remove permissions just for development purposes
+    # permission_classes = (permissions.IsAuthenticated, )
+    queryset = ProofText.objects.all()
+    serializer_class = ProofTextSerializer
 
 
 # class UserCreate(APIView):
