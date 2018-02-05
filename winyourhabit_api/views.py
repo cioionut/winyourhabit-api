@@ -6,8 +6,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework import permissions
 
 
-from django.contrib.auth.models import User
-
+from winyourhabit_api.models import User
 from winyourhabit_api.serializers import UserSerializer
 
 

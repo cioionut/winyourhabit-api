@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from winyourhabit_api.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -24,4 +25,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password')
+        fields = ('id', 'username', 'email', 'password', 'credit')

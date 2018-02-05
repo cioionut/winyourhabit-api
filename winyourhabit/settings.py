@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -121,13 +123,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# additional settings
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
 
-from datetime import timedelta
 
 SIMPLE_JWT = {
     # long life for development
@@ -151,3 +154,5 @@ SIMPLE_JWT = {
     # 'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     # 'TOKEN_TYPE_CLAIM': 'token_type',
 }
+
+AUTH_USER_MODEL = 'winyourhabit_api.User'
