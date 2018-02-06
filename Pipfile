@@ -12,6 +12,7 @@ djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 coreapi = "*"
 django-heroku = "*"
+gunicorn = "*"
 
 
 [dev-packages]
