@@ -1,11 +1,10 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 # from django.contrib.auth.models import User
-from winyourhabit_api.models import User, ProofText
+from winyourhabit_api.models import User, ProofText, HabitGroup
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     email = serializers.EmailField(
             required=True,
             validators=[UniqueValidator(queryset=User.objects.all())]
@@ -43,3 +42,11 @@ class ProofTextSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProofText
         fields = ('id', 'type', 'content')
+
+
+class HabitGroupSerializer(serializers.ModelSerializer):
+    users = UserSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = HabitGroup
+        fields = ('title', 'description', 'users', 'proof_type', 'created_date', 'time_frame')

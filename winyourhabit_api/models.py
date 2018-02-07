@@ -32,18 +32,17 @@ class ProofText(Proof):
 
 
 class HabitGroup(models.Model):
-    title = models.CharField(max_length=500, blank=True, default='')
-
-    description = models.CharField(max_length=500, blank=True, default='')
-
-    users = models.ManyToManyField(User, related_name='users')
+    title = models.CharField(max_length=500, blank=False, default='')
+    description = models.CharField(max_length=1024, blank=True, default='')
+    users = models.ManyToManyField(User, related_name='habit_groups')
     proof_type = models.CharField(
         verbose_name='ProofType',
         max_length=10,
         choices=Proof.PROOF_TYPE_CHOICES,
         default=Proof.TEXT,
     )
-    timeframe = models.FloatField(default=24*3600)
+    created_date = models.DateTimeField(auto_now_add=True)
+    time_frame = models.IntegerField(default=1)  # numbers of days
 
     # mapUserAutoAddTimeframe: < userId, < bool >>
     # mapUserToBetDefaultValue: < userId, float

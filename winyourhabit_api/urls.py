@@ -8,7 +8,8 @@ from django.urls import path
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
 router.register(r'users', views.UserViewSet)
-router.register(r'text_proofs', views.ProofTextViewSet)
+router.register(r'text-proofs', views.ProofTextViewSet)
+router.register(r'habit-groups', views.HabitGroupViewSet)
 
 
 # The API URLs are now determined automatically by the router.
