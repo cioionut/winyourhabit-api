@@ -1,14 +1,13 @@
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.authtoken.models import Token
-from rest_framework import permissions
 from rest_framework.decorators import detail_route
 
 
-from winyourhabit_api.models import User, ProofText, HabitGroup
-from winyourhabit_api.serializers import UserSerializer, ProofTextSerializer, HabitGroupSerializer
+from winyourhabit_api.models import User, Proof, HabitGroup, Objective, NegativeVote
+from winyourhabit_api.serializers import UserSerializer, ProofSerializer
+from winyourhabit_api.serializers import HabitGroupSerializer, ObjectiveSerializer
+from winyourhabit_api.serializers import NegativeVoteSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -33,15 +32,15 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ProofTextViewSet(viewsets.ModelViewSet):
+class ProofViewSet(viewsets.ModelViewSet):
     """
         This viewset automatically provides `list`, `create`, `retrieve`,
         `update` and `destroy` actions.
     """
     # remove permissions just for development purposes
     # permission_classes = (permissions.IsAuthenticated, )
-    queryset = ProofText.objects.all()
-    serializer_class = ProofTextSerializer
+    queryset = Proof.objects.all()
+    serializer_class = ProofSerializer
 
 
 class HabitGroupViewSet(viewsets.ModelViewSet):
@@ -66,6 +65,28 @@ class HabitGroupViewSet(viewsets.ModelViewSet):
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ObjectiveViewSet(viewsets.ModelViewSet):
+    """
+        This viewset automatically provides `list`, `create`, `retrieve`,
+        `update` and `destroy` actions.
+    """
+    # remove permissions just for development purposes
+    # permission_classes = (permissions.IsAuthenticated, )
+    queryset = Objective.objects.all()
+    serializer_class = ObjectiveSerializer
+
+
+class NegativeVoteViewSet(viewsets.ModelViewSet):
+    """
+        This viewset automatically provides `list`, `create`, `retrieve`,
+        `update` and `destroy` actions.
+    """
+    # remove permissions just for development purposes
+    # permission_classes = (permissions.IsAuthenticated, )
+    queryset = NegativeVote.objects.all()
+    serializer_class = NegativeVoteSerializer
 
 
 # class UserCreate(APIView):

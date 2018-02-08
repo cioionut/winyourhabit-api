@@ -20,15 +20,10 @@ class Proof(models.Model):
         default=TEXT,
     )
 
-    class Meta:
-        abstract = True
-
-
-class ProofText(Proof):
     content = models.CharField(max_length=5000, blank=True, default='')
 
-
-# class UserGroup(models.Model):
+    def __str__(self):
+        return self.content
 
 
 class HabitGroup(models.Model):
@@ -50,3 +45,28 @@ class HabitGroup(models.Model):
     #
     # fVoteAddMember: (votedUserId, votingUserId, bool vote)
     # fVoteRemoveMember: (votedUserId, votingUserId, bool vote)
+    def __str__(self):
+        return self.title
+
+
+class Objective(models.Model):
+    title = models.CharField(max_length=500, blank=False, default='')
+    description = models.CharField(max_length=1024, blank=True, default='')
+    start_date = models.DateTimeField(blank=False)
+    valid = models.BooleanField(default=False)
+    bet_value = models.FloatField(default=1.)
+
+    user = models.ForeignKey(User, related_name='objectives', on_delete=models.CASCADE)
+    habit_group = models.ForeignKey(HabitGroup, related_name='objectives',
+                                    on_delete=models.CASCADE)
+    proof = models.OneToOneField(Proof, related_name='objective', null=True,
+                                 on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.title
+
+
+class NegativeVote(models.Model):
+    user = models.ForeignKey(User, related_name='negative_votes', on_delete=models.CASCADE)
+    objective = models.ForeignKey(Objective, related_name='negative_votes',
+                                  on_delete=models.CASCADE)

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 # from django.contrib.auth.models import User
-from winyourhabit_api.models import User, ProofText, HabitGroup
+from winyourhabit_api.models import User, Proof, HabitGroup, Objective, NegativeVote
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,11 +27,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'password', 'credit')
 
 
-class ProofTextSerializer(serializers.ModelSerializer):
+class ProofSerializer(serializers.ModelSerializer):
 
     type = serializers.ChoiceField(
             required=True,
-            choices=[ProofText.TEXT],
+            choices=[Proof.TEXT],
             # validators=[UniqueValidator(queryset=User.objects.all())]
             )
     content = serializers.CharField(
@@ -40,8 +40,8 @@ class ProofTextSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = ProofText
-        fields = ('id', 'type', 'content')
+        model = Proof
+        fields = ('id', 'type', 'content', 'objective')
 
 
 class HabitGroupSerializer(serializers.ModelSerializer):
@@ -50,3 +50,15 @@ class HabitGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = HabitGroup
         fields = ('title', 'description', 'users', 'proof_type', 'created_date', 'time_frame')
+
+
+class ObjectiveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Objective
+        fields = '__all__'
+
+
+class NegativeVoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NegativeVote
+        fields = '__all__'
