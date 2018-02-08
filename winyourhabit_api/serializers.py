@@ -55,6 +55,10 @@ class HabitGroupSerializer(serializers.ModelSerializer):
 class ObjectiveSerializer(serializers.ModelSerializer):
     # user = UserSerializer()
     # habit_group = HabitGroupSerializer()
+    # proof = ProofSerializer(read_only=True)
+
+    # def perform_create(self, serializer):
+    #     serializer.save(proof=self.request.proof)
 
     class Meta:
         model = Objective
@@ -64,11 +68,13 @@ class ObjectiveSerializer(serializers.ModelSerializer):
 class NegativeVoteSerializer(serializers.ModelSerializer):
 
     # def create(self, validated_data):
-    #     user = User.objects.create_user(
-    #                 validated_data['username'],
-    #                 validated_data['email'],
-    #                 validated_data['password'])
-    #     return user
+    #     negative_vote = NegativeVote.objects.create(**validated_data)
+    #
+    #     if negative_vote.objective.proof is not None:
+    #         n_nvotes = NegativeVote.objective
+    #
+    #
+    #     return negative_vote
 
     class Meta:
         model = NegativeVote
