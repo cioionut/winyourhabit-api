@@ -55,7 +55,7 @@ class HabitGroupSerializer(serializers.ModelSerializer):
 class ObjectiveSerializer(serializers.ModelSerializer):
     # user = UserSerializer()
     # habit_group = HabitGroupSerializer()
-    # proof = ProofSerializer(read_only=True)
+    proof = ProofSerializer(read_only=True)
 
     # def perform_create(self, serializer):
     #     serializer.save(proof=self.request.proof)
