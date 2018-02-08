@@ -31,7 +31,7 @@ class ProofSerializer(serializers.ModelSerializer):
 
     type = serializers.ChoiceField(
             required=True,
-            choices=[Proof.TEXT],
+            choices=Proof.PROOF_TYPE_CHOICES,
             # validators=[UniqueValidator(queryset=User.objects.all())]
             )
     content = serializers.CharField(
