@@ -24,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'credit')
+        fields = ('id', 'username', 'email', 'password', 'credit', 'habit_groups')
 
 
 class ProofSerializer(serializers.ModelSerializer):
@@ -41,7 +41,7 @@ class ProofSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Proof
-        fields = ('id', 'type', 'content', 'objective')
+        fields = '__all__'
 
 
 class HabitGroupSerializer(serializers.ModelSerializer):
@@ -49,16 +49,27 @@ class HabitGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HabitGroup
-        fields = ('title', 'description', 'users', 'proof_type', 'created_date', 'time_frame')
+        fields = '__all__'
 
 
 class ObjectiveSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    habit_group = HabitGroupSerializer()
+
     class Meta:
         model = Objective
         fields = '__all__'
 
 
 class NegativeVoteSerializer(serializers.ModelSerializer):
+
+    # def create(self, validated_data):
+    #     user = User.objects.create_user(
+    #                 validated_data['username'],
+    #                 validated_data['email'],
+    #                 validated_data['password'])
+    #     return user
+
     class Meta:
         model = NegativeVote
         fields = '__all__'
