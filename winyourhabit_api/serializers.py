@@ -53,8 +53,8 @@ class HabitGroupSerializer(serializers.ModelSerializer):
 
 
 class ObjectiveSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    habit_group = HabitGroupSerializer()
+    # user = UserSerializer()
+    # habit_group = HabitGroupSerializer()
 
     class Meta:
         model = Objective
