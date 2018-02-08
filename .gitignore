@@ -1,4 +1,4 @@
-# python environment folder
+# environment variables
 .env
 
 # ignore database

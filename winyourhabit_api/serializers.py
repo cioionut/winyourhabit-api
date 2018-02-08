@@ -1,3 +1,4 @@
+import base64
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 # from django.contrib.auth.models import User
@@ -38,6 +39,8 @@ class ProofSerializer(serializers.ModelSerializer):
         required=True,
         max_length=5000,
     )
+
+    image = serializers.ImageField()
 
     class Meta:
         model = Proof

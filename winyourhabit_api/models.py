@@ -36,6 +36,7 @@ class Proof(models.Model):
     )
 
     content = models.CharField(max_length=5000, blank=True, default='')
+    image = models.ImageField(upload_to="proofs/images")
     objective = models.OneToOneField(Objective, related_name='proof', null=True, on_delete=models.CASCADE)
 
     def __str__(self):

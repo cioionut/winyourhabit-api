@@ -30,18 +30,20 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'rest_framework',
     'winyourhabit_api.apps.WinyourhabitApiConfig',
 ]
+# Application definition
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -160,5 +162,20 @@ SIMPLE_JWT = {
 }
 
 AUTH_USER_MODEL = 'winyourhabit_api.User'
+
+
+# COUDINARY
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'ciotransport',
+    'API_KEY': os.environ['CLOUDINARY_API_KEY'],
+    'API_SECRET': os.environ['CLOUDINARY_SECRET_KEY']
+}
+
+# STATIC_URL = '/static/'
+# STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+
+MEDIA_URL = '/media/'  # or any prefix you choose
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 django_heroku.settings(locals())

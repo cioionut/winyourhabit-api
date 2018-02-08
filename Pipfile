@@ -7,12 +7,15 @@ name = "pypi"
 
 [packages]
 
-django = "*"
+Django = "*"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 coreapi = "*"
 django-heroku = "*"
 gunicorn = "*"
+cloudinary = "*"
+Pillow = "*"
+django-cloudinary-storage = "*"
 
 
 [dev-packages]
