@@ -79,13 +79,15 @@ class HabitGroupViewSet(viewsets.ModelViewSet):
                     objectives += (
                             hg_user.objectives.filter(
                             Q(start_date__gte=datetime.now().date()) |
-                            Q(start_date__gte=datetime.now().date() - timedelta(days=hg.time_frame))
+                            Q(start_date__gte=datetime.now().date() - timedelta(days=hg.time_frame)),
+                            habit_group=hg.id,
                         ).order_by('start_date').all())
                 else:
                     objs = (
                         hg_user.objectives.filter(
                             start_date__lte=datetime.now().date(),
-                            start_date__gte=datetime.now().date() - timedelta(days=hg.time_frame)
+                            start_date__gte=datetime.now().date() - timedelta(days=hg.time_frame),
+                            habit_group=hg.id,
                         ).order_by('start_date'))
                     if len(objs) > 0:
                         objectives.append(objs[0])
@@ -106,7 +108,8 @@ class HabitGroupViewSet(viewsets.ModelViewSet):
                     objectives += (
                         hg_user.objectives.filter(
                             start_date__lte=datetime.now().date() - timedelta(days=hg.time_frame),
-                            valid=True
+                            valid=True,
+                            habit_group=hg.id,
                         ).order_by('start_date').all())
 
             sobjectives = ObjectiveSerializer(objectives, many=True)
