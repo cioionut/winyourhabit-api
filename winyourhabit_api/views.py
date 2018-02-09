@@ -81,6 +81,7 @@ class HabitGroupViewSet(viewsets.ModelViewSet):
                             Q(start_date__gte=datetime.now().date()) |
                             Q(start_date__gte=datetime.now().date() - timedelta(days=hg.time_frame)),
                             habit_group=hg.id,
+                            proof__isnull=True,
                         ).order_by('start_date').all())
                 else:
                     objs = (
@@ -88,6 +89,7 @@ class HabitGroupViewSet(viewsets.ModelViewSet):
                             start_date__lte=datetime.now().date(),
                             start_date__gte=datetime.now().date() - timedelta(days=hg.time_frame),
                             habit_group=hg.id,
+                            proof__isnull=True,
                         ).order_by('start_date'))
                     if len(objs) > 0:
                         objectives.append(objs[0])
@@ -103,16 +105,24 @@ class HabitGroupViewSet(viewsets.ModelViewSet):
             user_id = int(self.request.query_params.get('user_id', None))
             hg = self.get_object()
             objectives = list()
+
             for hg_user in hg.users.all():
+
                 if hg_user.id != user_id:
                     objectives += (
                         hg_user.objectives.filter(
-                            start_date__lte=datetime.now().date() - timedelta(days=hg.time_frame),
+                            # start_date__lte=datetime.now().date() - timedelta(days=hg.time_frame),
                             valid=True,
+                            proof__isnull=False,
                             habit_group=hg.id,
                         ).order_by('start_date').all())
+            new_objectives = list()
+            for objective in objectives:
+                voters_id = [vote.user.id for vote in Vote.objects.filter(objective=objective.id).all()]
+                if user_id not in voters_id:
+                    new_objectives.append(objective)
 
-            sobjectives = ObjectiveSerializer(objectives, many=True)
+            sobjectives = ObjectiveSerializer(new_objectives, many=True)
             return Response(sobjectives.data, status=status.HTTP_201_CREATED)
 
         except Exception as e:
