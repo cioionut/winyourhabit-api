@@ -4,6 +4,7 @@ from rest_framework.validators import UniqueValidator
 from winyourhabit_api.models import User, Proof, HabitGroup, Objective, Vote
 from django.db.models import Q
 
+
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
             required=True,

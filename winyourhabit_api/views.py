@@ -1,7 +1,9 @@
+from datetime import datetime, timedelta
+from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 
 
 from winyourhabit_api.models import User, Proof, HabitGroup, Objective, Vote
@@ -62,6 +64,53 @@ class HabitGroupViewSet(viewsets.ModelViewSet):
             hg.users.add(user)
             hg_serialized = HabitGroupSerializer(hg)
             return Response(hg_serialized.data, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    @detail_route(methods=['get'], url_path='active-objectives')
+    def active_objectives(self, request, *args, **kwargs):
+        try:
+            user_id = int(self.request.query_params.get('user_id', None))
+            hg = self.get_object()
+            objectives = list()
+            for hg_user in hg.users.all():
+                if hg_user.id == user_id:
+                    objectives += (
+                            hg_user.objectives.filter(
+                            start_date__lte=datetime.now().date(),
+                            start_date__gte=datetime.now().date() - timedelta(days=hg.time_frame)
+                        ).order_by('start_date').all())
+                else:
+                    objs = (
+                        hg_user.objectives.filter(
+                            start_date__lte=datetime.now().date(),
+                            start_date__gte=datetime.now().date() - timedelta(days=hg.time_frame)
+                        ).order_by('start_date'))
+                    if len(objs) > 0:
+                        objectives.append(objs[0])
+            sobjectives = ObjectiveSerializer(objectives, many=True)
+            return Response(sobjectives.data, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    @detail_route(methods=['get'], url_path='inactive-objectives')
+    def active_objectives(self, request, *args, **kwargs):
+        try:
+            user_id = int(self.request.query_params.get('user_id', None))
+            hg = self.get_object()
+            objectives = list()
+            for hg_user in hg.users.all():
+                if hg_user.id != user_id:
+                    objectives += (
+                        hg_user.objectives.filter(
+                            start_date__lte=datetime.now().date() - timedelta(days=hg.time_frame),
+                            valid=True
+                        ).order_by('start_date').all())
+
+            sobjectives = ObjectiveSerializer(objectives, many=True)
+            return Response(sobjectives.data, status=status.HTTP_201_CREATED)
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
