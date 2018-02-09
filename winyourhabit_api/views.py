@@ -78,8 +78,8 @@ class HabitGroupViewSet(viewsets.ModelViewSet):
                 if hg_user.id == user_id:
                     objectives += (
                             hg_user.objectives.filter(
-                            start_date__lte=datetime.now().date(),
-                            start_date__gte=datetime.now().date() - timedelta(days=hg.time_frame)
+                            Q(start_date__gte=datetime.now().date()) |
+                            Q(start_date__gte=datetime.now().date() - timedelta(days=hg.time_frame))
                         ).order_by('start_date').all())
                 else:
                     objs = (
@@ -96,7 +96,7 @@ class HabitGroupViewSet(viewsets.ModelViewSet):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     @detail_route(methods=['get'], url_path='inactive-objectives')
-    def active_objectives(self, request, *args, **kwargs):
+    def inactive_objectives(self, request, *args, **kwargs):
         try:
             user_id = int(self.request.query_params.get('user_id', None))
             hg = self.get_object()
