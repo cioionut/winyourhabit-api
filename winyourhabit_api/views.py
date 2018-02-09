@@ -4,10 +4,10 @@ from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 
 
-from winyourhabit_api.models import User, Proof, HabitGroup, Objective, NegativeVote
+from winyourhabit_api.models import User, Proof, HabitGroup, Objective, Vote
 from winyourhabit_api.serializers import UserSerializer, ProofSerializer
 from winyourhabit_api.serializers import HabitGroupSerializer, ObjectiveSerializer
-from winyourhabit_api.serializers import NegativeVoteSerializer
+from winyourhabit_api.serializers import VoteSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -78,15 +78,15 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
     serializer_class = ObjectiveSerializer
 
 
-class NegativeVoteViewSet(viewsets.ModelViewSet):
+class VoteViewSet(viewsets.ModelViewSet):
     """
         This viewset automatically provides `list`, `create`, `retrieve`,
         `update` and `destroy` actions.
     """
     # remove permissions just for development purposes
     # permission_classes = (permissions.IsAuthenticated, )
-    queryset = NegativeVote.objects.all()
-    serializer_class = NegativeVoteSerializer
+    queryset = Vote.objects.all()
+    serializer_class = VoteSerializer
 
 
 # class UserCreate(APIView):

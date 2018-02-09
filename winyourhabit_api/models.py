@@ -34,7 +34,7 @@ class Proof(models.Model):
         choices=PROOF_TYPE_CHOICES,
         default=TEXT,
     )
-
+    created_date = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=5000, blank=True, default='')
     image = models.ImageField(upload_to="proofs/images")
     objective = models.OneToOneField(Objective, related_name='proof', null=True, on_delete=models.CASCADE)
@@ -60,7 +60,8 @@ class HabitGroup(models.Model):
         return self.title
 
 
-class NegativeVote(models.Model):
+class Vote(models.Model):
+    value = models.BooleanField(default=True)
     user = models.ForeignKey(User, related_name='negative_votes', on_delete=models.CASCADE)
     objective = models.ForeignKey(Objective, related_name='negative_votes',
                                   on_delete=models.CASCADE)
